@@ -46,6 +46,11 @@ def main():
     if written != LINE + "\n":
         print("entry.txt does not match the vow", file=sys.stderr)
         return 1
+    # Validate what actually landed on disk, not just what we meant to
+    # write: the gate scores the file, so re-check its text as read back.
+    if not valid(written.rstrip("\n")):
+        print("entry.txt fails the gate as written", file=sys.stderr)
+        return 1
     print(f"wrote {len(LINE)}-character vow to /output/entry.txt")
     return 0
 
